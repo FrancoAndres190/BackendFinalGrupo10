@@ -47,9 +47,10 @@ namespace BackendFinalGrupo10.Repository
             _context.SaveChanges();
         }
 
+        public User? ValidateUser(AuthenticationDto authDto)
+        {
+            return _context.Users.FirstOrDefault(p => p.UserName == authDto.UserName && p.Password == authDto.Password);
+        }
 
-        
-
-        
     }
 }

@@ -16,5 +16,7 @@ namespace BackendFinalGrupo10.Repository.Interfaces
         public void Update(CreateAndUpdateUserDTO dto, int id);
 
         public void Delete(int id);
+
+        public User? ValidateUser(AuthenticationDto authDto);
     }
 }

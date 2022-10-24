@@ -2,6 +2,7 @@
 using BackendFinalGrupo10.Entitys;
 using BackendFinalGrupo10.Repository;
 using BackendFinalGrupo10.Repository.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace BackendFinalGrupo10.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
 
