@@ -1,6 +1,8 @@
 ﻿using BackendFinalGrupo10.DTOs;
 using BackendFinalGrupo10.Entitys;
 using BackendFinalGrupo10.Repository.Interfaces;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -49,9 +51,9 @@ namespace BackendFinalGrupo10.Controllers
 
             var claimsForToken = new List<Claim>
             {
-                new Claim("sub", user.Id.ToString()),
-                new Claim("given_name", user.Name), 
-                new Claim("family_name", user.LastName) 
+                new Claim("userId", user.Id.ToString()),
+                new Claim("userName", user.UserName), 
+                new Claim("role", user.Rango.ToString())
             };
            
 
@@ -63,11 +65,13 @@ namespace BackendFinalGrupo10.Controllers
                 DateTime.UtcNow.AddHours(1),
                 credentials);
 
+
             var tokenToReturn = new JwtSecurityTokenHandler() 
                 .WriteToken(jwtSecurityToken);
 
             return Ok(tokenToReturn);
         }
+
 
     }
 }

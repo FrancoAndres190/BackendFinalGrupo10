@@ -11,12 +11,13 @@ namespace BackendFinalGrupo10.Repository.Interfaces
 
         public List<User> GetAll();
 
-        public void Create(CreateAndUpdateUserDTO dto);
+        public void Create(User user);
 
-        public void Update(CreateAndUpdateUserDTO dto, int id);
+        public void Update(User user);
 
         public void Delete(int id);
 
         public User? ValidateUser(AuthenticationDto authDto);
+
     }
 }

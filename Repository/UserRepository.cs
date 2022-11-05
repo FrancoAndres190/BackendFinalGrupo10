@@ -27,16 +27,14 @@ namespace BackendFinalGrupo10.Repository
             return _context.Users.SingleOrDefault(u => u.Id == userId);
         }
 
-        public void Create(CreateAndUpdateUserDTO dto)
+        public void Create(User user)
         {
-            _context.Users.Add(_mapper.Map<User>(dto));
+            _context.Users.Add(_mapper.Map<User>(user));
             _context.SaveChanges();
         }
 
-        public void Update(CreateAndUpdateUserDTO dto, int id)
+        public void Update(User user)
         {
-            User user = _mapper.Map<User>(dto);
-            user.Id = id;
             _context.Users.Update(user);
             _context.SaveChanges();
         }

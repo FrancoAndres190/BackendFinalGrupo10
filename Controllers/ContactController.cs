@@ -25,6 +25,7 @@ namespace BackendFinalGrupo10.Controllers
 
         public IActionResult GetAll()
         {
+            
             return Ok(_contactRepository.GetAll());
         }
 

@@ -3,6 +3,7 @@ using BackendFinalGrupo10.Context;
 using BackendFinalGrupo10.Profiles;
 using BackendFinalGrupo10.Repository;
 using BackendFinalGrupo10.Repository.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -40,8 +41,8 @@ builder.Services.AddSwaggerGen(setupAction =>
 });
 
 
-builder.Services.AddDbContext<AgendaContext>(dbContextOptions => dbContextOptions.UseSqlite(
-    builder.Configuration["ConnectionStrings:Grupo10APIDBConnectionString"]));
+builder.Services.AddDbContext<AgendaContext>(dbContextOptions => dbContextOptions.UseSqlServer(
+    builder.Configuration.GetConnectionString("CSGrupo10APIDB")));
 
 
 //Aca va token
@@ -77,9 +78,20 @@ IMapper mapper = config.CreateMapper();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<DbContext, AgendaContext>();
 
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: "AllowOrigin",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+        });
+});
 
 
 
@@ -92,6 +104,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowOrigin");
 
 app.UseHttpsRedirection();
 
